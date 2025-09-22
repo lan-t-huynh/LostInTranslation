@@ -14,16 +14,14 @@ import java.util.Map;
  */
 public class CountryCodeConverter {
 
-    private Map<String, String> countryCodeToCountry = new HashMap<>();
-    private Map<String, String> countryToCountryCode = new HashMap<>();
+    private final Map<String, String> countryCodeToCountry = new HashMap<>();
+    private final Map<String, String> countryToCountryCode = new HashMap<>();
 
     /**
      * Default constructor that loads the country codes from "country-codes.txt"
      * in the resources folder.
      */
-    public CountryCodeConverter() {
-        this("country-codes.txt");
-    }
+    public CountryCodeConverter() { this("country-codes.txt"); }
 
     /**
      * Overloaded constructor that allows us to specify the filename to load the country code data from.
@@ -41,10 +39,10 @@ public class CountryCodeConverter {
             while (iterator.hasNext()) {
                 String line = iterator.next();
                 String[] parts = line.split("\t");
-                String code = parts[0];
-                String country = parts[1];
-                countryCodeToCountry.put(code, country);
-                countryToCountryCode.put(country, code);
+                String code = parts[2];
+                String country = parts[0];
+                countryCodeToCountry.put(code.toLowerCase(), country);
+                countryToCountryCode.put(country, code.toLowerCase());
                 }
         }
         catch (IOException | URISyntaxException ex) {
