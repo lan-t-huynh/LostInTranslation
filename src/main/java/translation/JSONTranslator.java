@@ -57,6 +57,14 @@ public class JSONTranslator implements Translator {
                 for (String key : countryData.keySet()) {
                     if (!key.equals("id") && !key.equals("alpha2") && !key.equals("alpha3")) {
                         String languageCode = key;
+                        String translatedName = countryData.getString(languageCode);
+
+                        String mapKey = countryCode + ":" + languageCode;
+                        translations.put(mapKey, translatedName);
+
+                        if(!languageCodes.contains(languageCode)){
+                            languageCodes.add(languageCode);
+                        }
                         if (!languages.contains(languageCode)) {
                             languages.add(languageCode);
                         }
@@ -84,6 +92,6 @@ public class JSONTranslator implements Translator {
 
             String key = countryCode + ':' + languageCode;
             return translations.getOrDefault(key, "JSONTranslator's translate method is not implemented!");
-
+            //return "Canada";
     }
 }
