@@ -8,18 +8,20 @@ import java.util.*;
 
 public class GetCode {
 
-    public Collection<String> getCountryOrLanguage(String filename) {
+    public static String[] getCountryOrLanguage(String filename) {
         try {
-            List<String> lines = Files.readAllLines(Paths.get(getClass()
+            List<String> lines = Files.readAllLines(Paths.get(GetCode.class
                     .getClassLoader().getResource(filename).toURI()));
 
             Iterator<String> iterator = lines.iterator();
             iterator.next(); // skip the first line
-            List<String> countries = new ArrayList<>();
+            String[] countries = new String[lines.size() - 1];
+            int i = 0;
             while (iterator.hasNext()) {
                 String line = iterator.next();
                 String[] parts = line.split("\t");
-                countries.add(parts[0]);
+                countries[i] += (parts[0]);
+                i += 1;
             }
             return countries;
         }
@@ -28,11 +30,11 @@ public class GetCode {
         }
     }
 
-    public Collection<String> getCountry(){
+    public static String[] getCountry(){
         return getCountryOrLanguage("country-codes.txt");
     }
 
-    public Collection<String> getLanguage(){
+    public static String[] getLanguage(){
         return getCountryOrLanguage("language-codes.txt");
     }
 }
