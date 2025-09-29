@@ -8,7 +8,7 @@ import java.util.*;
 
 public class GetCode {
 
-    public static String[] getCountryOrLanguage(String filename) {
+    public static String [] getCountryOrLanguage(String filename) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(GetCode.class
                     .getClassLoader().getResource(filename).toURI()));
@@ -17,11 +17,14 @@ public class GetCode {
             iterator.next(); // skip the first line
             String[] countries = new String[lines.size() - 1];
             int i = 0;
-            while (iterator.hasNext()) {
-                String line = iterator.next();
+            for (String line : lines) {
+                if (i == 0) {
+                    i++;
+                    continue;
+                }
                 String[] parts = line.split("\t");
-                countries[i] += (parts[0]);
-                i += 1;
+                countries[i - 1] = (parts[0]);
+                i++;
             }
             return countries;
         }

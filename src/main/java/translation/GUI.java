@@ -29,41 +29,29 @@ public class GUI {
             LanguageCodeConverter languageConverter = new LanguageCodeConverter();
 
             // ComboBox for countries
-            JComboBox<String> countryComboBox = new JComboBox<>();
-            for (String code : translator.getCountryCodes()) {
-                String name = countryConverter.fromCountryCode(code);
-                countryComboBox.addItem(name != null ? name : code);
-            }
+            JComboBox<String> countryComboBox = new JComboBox<>(GetCode.getCountry());
             countryPanel.add(countryComboBox);
 
             // JList for languages
-            DefaultListModel<String> langListModel = new DefaultListModel<>();
-            for (String code : languageConverter.languageCodeToLanguage.keySet()) {
-                String name = languageConverter.fromLanguageCode(code);
-                langListModel.addElement(name != null ? name : code);
-            }
-            JList<String> languageList = new JList<>(langListModel);
+            JList<String> languageList = new JList<>(GetCode.getLanguage());
             languageList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             JScrollPane scrollPane = new JScrollPane(languageList);
-            scrollPane.setPreferredSize(new java.awt.Dimension(150, 100));
+            scrollPane.setPreferredSize(new java.awt.Dimension(480, 100));
             languagePanel.add(scrollPane);
 
             // ActionListener for translation
-            submit.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selectedCountryName = (String) countryComboBox.getSelectedItem();
-                    String countryCode = countryConverter.fromCountry(selectedCountryName);
+            submit.addActionListener(e -> {
+                String selectedCountryName = (String) countryComboBox.getSelectedItem();
+                String countryCode = countryConverter.fromCountry(selectedCountryName);
 
-                    String selectedLangName = languageList.getSelectedValue();
-                    String languageCode = languageConverter.fromLanguage(selectedLangName);
+                String selectedLangName = languageList.getSelectedValue();
+                String languageCode = languageConverter.fromLanguage(selectedLangName);
 
-                    String result = translator.translate(countryCode, languageCode);
-                    if (result == null || result.contains("not implemented")) {
-                        result = "no tra`nslation found!";
-                    }
-                    resultLabel.setText(result);
+                String result = translator.translate(countryCode, languageCode);
+                if (result == null || result.contains("not implemented")) {
+                    result = "no translation found!";
                 }
+                resultLabel.setText(result);
             });
 
             JPanel mainPanel = new JPanel();
