@@ -40,7 +40,7 @@ public class GUI {
             DefaultListModel<String> langListModel = new DefaultListModel<>();
 
             java.util.List<String> languageNames = new java.util.ArrayList<>();
-            for (String code : translator.getLanguageCodes()) {
+            for (String code : languageConverter.languageCodeToLanguage.keySet()) {
                 String name = languageConverter.fromLanguageCode(code);
                 languageNames.add(name != null ? name : code);
             }
