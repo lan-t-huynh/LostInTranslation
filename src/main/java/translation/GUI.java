@@ -7,7 +7,7 @@ public class GUI {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Panels
+
             JPanel countryPanel = new JPanel();
             countryPanel.add(new JLabel("Country:"));
 
@@ -23,12 +23,12 @@ public class GUI {
             JLabel resultLabel = new JLabel("\t\t\t\t\t\t\t");
             buttonPanel.add(resultLabel);
 
-            // Use converters and JSONTranslator for dynamic data
+            // Use converters and JSONTranslator
             Translator translator = new JSONTranslator();
             CountryCodeConverter countryConverter = new CountryCodeConverter();
             LanguageCodeConverter languageConverter = new LanguageCodeConverter();
 
-            // ComboBox for countries (show full names, but store codes)
+            // ComboBox for countries
             JComboBox<String> countryComboBox = new JComboBox<>();
             for (String code : translator.getCountryCodes()) {
                 String name = countryConverter.fromCountryCode(code);
@@ -36,7 +36,7 @@ public class GUI {
             }
             countryPanel.add(countryComboBox);
 
-            // JList for languages (show full names, but store codes)
+            // JList for languages
             DefaultListModel<String> langListModel = new DefaultListModel<>();
             for (String code : languageConverter.languageCodeToLanguage.keySet()) {
                 String name = languageConverter.fromLanguageCode(code);
@@ -55,19 +55,17 @@ public class GUI {
                     String selectedCountryName = (String) countryComboBox.getSelectedItem();
                     String countryCode = countryConverter.fromCountry(selectedCountryName);
 
-                    // Just take the first selected language for simplicity
                     String selectedLangName = languageList.getSelectedValue();
                     String languageCode = languageConverter.fromLanguage(selectedLangName);
 
                     String result = translator.translate(countryCode, languageCode);
-                    if (result == null) {
-                        result = "no translation found!";
+                    if (result == null || result.contains("not implemented")) {
+                        result = "no tra`nslation found!";
                     }
                     resultLabel.setText(result);
                 }
             });
 
-            // Main panel setup
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.add(countryPanel);
