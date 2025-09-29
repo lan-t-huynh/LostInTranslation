@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class LanguageCodeConverter {
 
-    private final Map<String, String> languageCodeToLanguage = new HashMap<>();
+    final Map<String, String> languageCodeToLanguage = new HashMap<>();
     private final Map<String, String> languageToLanguageCode = new HashMap<>();
 
     /**

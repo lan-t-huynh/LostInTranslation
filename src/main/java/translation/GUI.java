@@ -38,14 +38,13 @@ public class GUI {
 
             // JList for languages (show full names, but store codes)
             DefaultListModel<String> langListModel = new DefaultListModel<>();
-            for (String code : translator.getLanguageCodes()) {
+            for (String code : languageConverter.languageCodeToLanguage.keySet()) {
                 String name = languageConverter.fromLanguageCode(code);
                 langListModel.addElement(name != null ? name : code);
             }
             JList<String> languageList = new JList<>(langListModel);
             languageList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             JScrollPane scrollPane = new JScrollPane(languageList);
-            scrollPane.setViewportView(languageList);
             scrollPane.setPreferredSize(new java.awt.Dimension(150, 100));
             languagePanel.add(scrollPane);
 
