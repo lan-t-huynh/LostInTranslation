@@ -38,14 +38,23 @@ public class GUI {
 
             // JList for languages
             DefaultListModel<String> langListModel = new DefaultListModel<>();
-            for (String code : languageConverter.languageCodeToLanguage.keySet()) {
+
+            java.util.List<String> languageNames = new java.util.ArrayList<>();
+            for (String code : translator.getLanguageCodes()) {
                 String name = languageConverter.fromLanguageCode(code);
-                langListModel.addElement(name != null ? name : code);
+                languageNames.add(name != null ? name : code);
             }
+
+            java.util.Collections.sort(languageNames);
+
+            for (String name : languageNames) {
+                langListModel.addElement(name);
+            }
+
             JList<String> languageList = new JList<>(langListModel);
             languageList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             JScrollPane scrollPane = new JScrollPane(languageList);
-            scrollPane.setPreferredSize(new java.awt.Dimension(150, 100));
+            scrollPane.setViewportView(languageList);
             languagePanel.add(scrollPane);
 
             // ActionListener for translation
@@ -60,7 +69,7 @@ public class GUI {
 
                     String result = translator.translate(countryCode, languageCode);
                     if (result == null || result.contains("not implemented")) {
-                        result = "no tra`nslation found!";
+                        result = "no translation found!";
                     }
                     resultLabel.setText(result);
                 }
