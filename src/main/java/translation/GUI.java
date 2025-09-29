@@ -60,7 +60,7 @@ public class GUI {
 
                     String result = translator.translate(countryCode, languageCode);
                     if (result == null || result.contains("not implemented")) {
-                        result = "no tra`nslation found!";
+                        result = "no translation found!";
                     }
                     resultLabel.setText(result);
                 }
